@@ -7,6 +7,13 @@
 <div id="content">
 	<h1>{include title}</h1>
 
+        {foreach $config->source as $path}
+		{continueIf substr($path, -12) !== '/overview.md'}
+		<div class="panel panel-default">
+			{Michelf\Markdown::defaultTransform(file_get_contents($path))|noescape}
+		</div>
+	{/foreach}
+
 	{var $group = false}
 
 	{if count($namespaces)}

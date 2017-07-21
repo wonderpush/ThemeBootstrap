@@ -1,11 +1,11 @@
 {
-	"name": "apigen/theme-bootstrap",
-	"description": "Twitter Bootstrap theme for ApiGen",
-	"homepage": "http://apigen.org/",
+	"name": "wonderpush/apigen-theme-bootstrap",
+	"description": "Twitter Bootstrap theme for ApiGen 4 with overview",
 	"license": "MIT",
 	"authors": [
 		{ "name": "Tomáš Votruba", "email": "tomas.vot@gmail.com" },
-		{ "name": "Olivier Laviale", "homepage": "https://github.com/olvlvl" }
+		{ "name": "Olivier Laviale", "homepage": "https://github.com/olvlvl" },
+		{ "name": "WonderPush", "homepage": "https://github.com/wonderpush" }
 	],
 	"require": {
 		"latte/latte": "~2.2"
