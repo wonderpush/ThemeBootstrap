@@ -132,6 +132,7 @@ pre code::after {
 
 pre code {
 	white-space: pre;
+	background: none;
 }
 
 .deprecated {
