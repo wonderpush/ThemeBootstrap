@@ -10,7 +10,26 @@
         {foreach $config->source as $path}
 		{continueIf substr($path, -12) !== '/overview.md'}
 		<div class="panel panel-default">
-			{Michelf\Markdown::defaultTransform(file_get_contents($path))|noescape}
+			<?php
+				// Read overview content
+				$text = file_get_contents($path);
+				// Configure highlighter
+				// @see vendor/apigen/apigen/src/DI/apigen.services.neon
+				// @see ApiGen\Generator\SourceCodeHighlighter::highlight
+				$highlighter = new FSHL\Highlighter(new FSHL\Output\HTML(), FSHL\Highlighter::OPTION_TAB_INDENT);
+				$highlighter->setLexer(new FSHL\Lexer\Php);
+				// Highlight code blocks
+				// @see ApiGen\Generator\Markups\MarkdownMarkup::block()
+				$pattern = '~<(code|pre)>(.+?)</\1>|```php\s(.+?)\n```~s';
+				$highlighted = preg_replace_callback($pattern, function($match) use ($highlighter) {
+					$highlighted = $highlighter->highlight(trim(isset($match[3]) ? $match[3] : $match[2]));
+					return "<pre>$highlighted</pre>";
+				}, $text);
+				// Apply markdown markup
+				// @see ApiGen\Generator\Markups\MarkdownMarkup::block()
+				$text = (new Michelf\MarkdownExtra())->transform($highlighted);
+			?>
+			{$text|noescape}
 		</div>
 	{/foreach}
 
